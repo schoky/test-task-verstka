@@ -1,0 +1,16 @@
+<div class="dialog" [class.open]="isOpen">
+  <div class="dialog-box">
+    <div class="dialog-header">
+      <h4 class="h-4">{{ title }}</h4>
+      <button class="btn btn-icon close" (click)="close()">
+        <svg width="1rem" height="1rem" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+          focusable="false">
+          <use xlink:href="/angular-test/sprite.svg#close"></use>
+        </svg>
+      </button>
+    </div>
+    <div class="dialog-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

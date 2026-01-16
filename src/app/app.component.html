@@ -1,0 +1,537 @@
+<div class="app-container">
+  <app-header class="header"></app-header>
+  <!-- content -->
+  <main class="content resizable-x">
+    <!-- left side -->
+    <aside class="left-panel">
+      <div class="left-panel-header">
+        <div class="left-panel-action">
+          <button
+            class="btn btn-sm btn-icon btn-outline-grey"
+            (click)="openDialog()"
+            type="button"
+          >
+            <svg
+              width="1rem"
+              height="1rem"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <use xlink:href="/angular-test/sprite.svg#hamburger"></use>
+            </svg>
+            <span class="btn-icon-text">Подстанции</span>
+          </button>
+
+          <app-dialog #dialog title="Выберите подстанцию">
+            <select
+              #substationSelect
+              (change)="selectSubstation(substationSelect.value)"
+              class="form-select w-100"
+              id="substations"
+            >
+              <option
+                *ngFor="let substation of substations"
+                [value]="substation.value"
+              >
+                {{ substation.value }}
+              </option>
+            </select>
+          </app-dialog>
+
+          <span> > </span>
+          <span class="left-panel-selected">{{ selectedSubstation }}</span>
+        </div>
+        <div class="left-panel-state">
+          <button class="btn btn-sm btn-icon btn-primary w-xs-100 w-sm-100">
+            <svg
+              width="1rem"
+              height="1rem"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <use xlink:href="/angular-test/sprite.svg#save"></use>
+            </svg>
+            <span class="btn-icon-text"> Сохранить </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tab-header">
+        <button for="substations" class="tab-link">Подстанция</button>
+        <select class="form-select d-none" id="substations">
+          <option value="{{ item.name }}" *ngFor="let item of substations">
+            {{ item.value }}
+          </option>
+        </select>
+
+        <button for="equipment" class="tab-link active">Оборудование</button>
+        <select class="form-select d-none" id="equipment">
+          <option value="{{ item.name }}" *ngFor="let item of equipment">
+            {{ item.value }}
+          </option>
+        </select>
+      </div>
+
+      <div class="list-container">
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-sm btn-icon btn-outline-grey active"
+          >
+            Список
+          </button>
+          <button type="button" class="btn btn-sm btn-icon btn-outline-grey">
+            Ведомость
+          </button>
+        </div>
+
+        <div class="left-panel-options">
+          <div class="row g-3 align-items-start align-items-md-center">
+            <div class="col">
+              <div class="list-options">
+                <div class="list-option">
+                  <label for="equipmentTypes">Тип</label>
+                  <select class="form-select" id="equipmentTypes">
+                    <option
+                      value="{{ item.name }}"
+                      *ngFor="let item of equipmentTypes"
+                    >
+                      {{ item.value }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="list-option">
+                  <label for="ruValues">РУ</label>
+                  <select class="form-select" id="ruValues">
+                    <option
+                      value="{{ item.name }}"
+                      *ngFor="let item of ruValues"
+                    >
+                      {{ item.value }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div
+                class="form-check form-switch form-switch-secondary form-switch-colored"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  role="switch"
+                  id="scheme"
+                />
+                <label class="form-check-label" for="scheme"> Схема </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Наименование</th>
+
+              <th>U ном.</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of listData">
+              <td>{{ item.name }}</td>
+
+              <td>{{ item.u }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </aside>
+
+    <!-- resizer -->
+    <aside class="resizer resizer-x">
+      <div class="resizer-container">
+        <div class="resizer-icon">
+          <svg
+            width="1rem"
+            height="1rem"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <use xlink:href="/angular-test/sprite.svg#dragToMove"></use>
+          </svg>
+          <svg
+            width="1rem"
+            height="1rem"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <use xlink:href="/angular-test/sprite.svg#dragToMove"></use>
+          </svg>
+          <svg
+            width="1rem"
+            height="1rem"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <use xlink:href="/angular-test/sprite.svg#dragToMove"></use>
+          </svg>
+        </div>
+      </div>
+    </aside>
+
+    <!-- right side -->
+    <aside class="right-panel">
+      <div class="right-panel-header">
+        <div class="right-panel-title">
+          <img src="document.png" alt="Document" height="30" />
+          <div>PTCH\HH-2</div>
+        </div>
+      </div>
+
+      <div class="right-panel-buttons">
+        <div class="row g-3">
+          <div class="col right-panel-actions">
+            <div class="row g-3">
+              <div class="col-auto">
+                <button
+                  class="btn btn-sm btn-icon btn-outline-primary btn-colored"
+                >
+                  <svg
+                    width="1rem"
+                    height="1rem"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <use
+                      xlink:href="/angular-test/sprite.svg#certificate"
+                    ></use>
+                  </svg>
+                  <span class="btn-icon-text">Проверить</span>
+                </button>
+              </div>
+              <div class="col-auto">
+                <button
+                  class="btn btn-sm btn-icon btn-outline-primary btn-colored"
+                >
+                  <svg
+                    width="1rem"
+                    height="1rem"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <use xlink:href="/angular-test/sprite.svg#cancel"></use>
+                  </svg>
+                  <span class="btn-icon-text"> Отменить проверку </span>
+                </button>
+              </div>
+              <div class="col-auto">
+                <button
+                  class="btn btn-sm btn-icon btn-outline-primary btn-colored"
+                  (click)="editMeasurement()"
+                >
+                  <svg
+                    width="1rem"
+                    height="1rem"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <use xlink:href="/angular-test/sprite.svg#edit"></use>
+                  </svg>
+                  <span class="btn-icon-text"> Редактировать </span>
+                </button>
+                <app-dialog-edit #dialogEdit title="Редактировать данные">
+                  <form
+                    class="dialog-edit mt-2"
+                    (ngSubmit)="saveMeasurementChanges(selectedMeasurement)"
+                  >
+                    <div class="dialog-edit-content">
+                      <div
+                        class="dialog-edit-fields"
+                        *ngFor="
+                          let measurement of selectedMeasurements;
+                          let i = index
+                        "
+                      >
+                        <input
+                          class="form-control form-control-grey w-100"
+                          type="text"
+                          placeholder="Источник"
+                          id="sourceSelectedEdit"
+                          [value]="selectedMeasurement?.source"
+                          #measurementInput
+                        />
+
+                        <input
+                          class="form-control form-control-grey w-100"
+                          type="text"
+                          placeholder="Фаза"
+                          id="phaseSelectedEdit"
+                          [value]="selectedMeasurement?.phase"
+                          #measurementInput
+                        />
+
+                        <input
+                          class="form-control form-control-grey w-100"
+                          type="text"
+                          placeholder="U, kB"
+                          id="uSelectedEdit"
+                          [value]="selectedMeasurement?.u"
+                          #measurementInput
+                        />
+
+                        <input
+                          class="form-control form-control-grey w-100"
+                          type="text"
+                          placeholder="I, A"
+                          id="iSelectedEdit"
+                          [value]="selectedMeasurement?.i"
+                          #measurementInput
+                        />
+
+                        <input
+                          class="form-control form-control-grey w-100"
+                          type="text"
+                          placeholder="Р, МВт"
+                          id="pSelectedEdit"
+                          [value]="selectedMeasurement?.p"
+                          #measurementInput
+                        />
+
+                        <input
+                          class="form-control form-control-grey w-100"
+                          type="text"
+                          placeholder="Q, Мвар"
+                          id="qSelectedEdit"
+                          [value]="selectedMeasurement?.q"
+                          #measurementInput
+                        />
+
+                        <input
+                          class="form-control form-control-grey w-100"
+                          type="text"
+                          placeholder="coѕ ф"
+                          id="cosSelectedEdit"
+                          [value]="selectedMeasurement?.cos"
+                          #measurementInput
+                        />
+                      </div>
+                      <div class="dialog-edit-actions">
+                        <button
+                          class="btn btn-primary btn-icon"
+                          (click)="saveMeasurementChanges(selectedMeasurement)"
+                        >
+                          <svg
+                            width="1rem"
+                            height="1rem"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                            focusable="false"
+                          >
+                            <use
+                              xlink:href="/angular-test/sprite.svg#save"
+                            ></use>
+                          </svg>
+                          <span class="btn-icon-text"> Сохранить </span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </app-dialog-edit>
+              </div>
+              <div class="col-auto">
+                <button
+                  class="btn btn-sm btn-icon btn-outline-primary btn-colored"
+                  (click)="removeMeasurement()"
+                >
+                  <svg
+                    width="1rem"
+                    height="1rem"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <use xlink:href="/angular-test/sprite.svg#delete"></use>
+                  </svg>
+                  <span class="btn-icon-text"> Удалить </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto right-panel-view">
+            <div class="row g-3">
+              <div class="col-auto">
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-icon btn-outline-grey active">
+                    <svg
+                      width="1rem"
+                      height="1rem"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <use xlink:href="/angular-test/sprite.svg#vertical"></use>
+                    </svg>
+                  </button>
+                  <button class="btn btn-sm btn-icon btn-outline-grey">
+                    <svg
+                      width="1rem"
+                      height="1rem"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <use
+                        xlink:href="/angular-test/sprite.svg#horizontal"
+                      ></use>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="col-auto right-panel-fullscreen">
+                <button class="btn btn-sm btn-icon btn-outline-grey">
+                  <svg
+                    width="1rem"
+                    height="1rem"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <use xlink:href="/angular-test/sprite.svg#expand"></use>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-panel-options">
+        <div class="message">
+          <span class="text-warning">Нет</span> проверенных замеров
+        </div>
+
+        <div class="form-check form-switch form-switch-primary">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            role="switch"
+            id="group-by-date"
+            (change)="toggleSort('date')"
+          />
+          <label class="form-check-label" for="group-by-date">
+            Группировать по дате
+          </label>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="form-check-primary">
+                <div class="form-check form-check-single">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    (change)="toggleSelectAll($event)"
+                  />
+                </div>
+              </th>
+              <th *ngFor="let header of measurementHeaders">{{ header }}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td colspan="10">
+                <div
+                  class="table-title text-primary pl-1"
+                  (click)="openDialogForm()"
+                >
+                  <div class="row g-2 flex-nowrap align-items-center">
+                    <div class="col-auto">
+                      <svg
+                        width="0.875rem"
+                        height="0.875rem"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <use xlink:href="/angular-test/sprite.svg#plus"></use>
+                      </svg>
+                    </div>
+                    <div class="col-auto">Добавить новые замеры</div>
+                  </div>
+                </div>
+                <app-dialog-form #dialogForm title="Добавить новые замеры">
+                  <app-measurement-form
+                    (newMeasurement)="addNewMeasurement($event)"
+                  ></app-measurement-form>
+                </app-dialog-form>
+              </td>
+            </tr>
+            <tr *ngFor="let measurement of measurements">
+              <td class="form-check-primary">
+                <div class="form-check form-check-single">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="isChecked(measurement)"
+                    (change)="toggleSelect(measurement)"
+                    (click)="selectMeasurement(measurement)"
+                  />
+                </div>
+              </td>
+              <td>{{ measurement.date }}</td>
+
+              <td>{{ measurement.time }}</td>
+
+              <td>{{ measurement.source }}</td>
+
+              <td>{{ measurement.phase }}</td>
+
+              <td>{{ measurement.u }}</td>
+
+              <td>{{ measurement.i }}</td>
+
+              <td>{{ measurement.p }}</td>
+
+              <td>{{ measurement.q }}</td>
+
+              <td>{{ measurement.cos }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </aside>
+  </main>
+
+  <div class="footer">Версия 11.6.5.41</div>
+</div>

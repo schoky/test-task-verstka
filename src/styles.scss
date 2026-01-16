@@ -1,0 +1,17 @@
+// utility
+@import "./styles/utilities/utility";
+
+// normalize
+@import "./styles/utilities/normalize";
+
+// responsive
+@import "./styles/utilities/responsive";
+
+// components
+@import "./styles/components/components";
+
+/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}

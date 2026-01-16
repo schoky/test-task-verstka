@@ -1,0 +1,56 @@
+@each $value, $vertical-align in $vertical-aligns {
+    .align {
+        &-#{$value} {
+            vertical-align: #{$vertical-align};
+        }
+        @include breakpoint-xs {
+            &-xs {
+                &-#{$value} {
+                    vertical-align: #{$vertical-align} !important;
+                }
+            }
+        }
+        @include breakpoint-sm {
+            &-sm {
+                &-#{$value} {
+                    vertical-align: #{$vertical-align} !important;
+                }
+            }
+        }
+        @include breakpoint-md {
+            &-md {
+                &-#{$value} {
+                    vertical-align: #{$vertical-align} !important;
+                }
+            }
+        }
+        @include breakpoint-lg {
+            &-lg {
+                &-#{$value} {
+                    vertical-align: #{$vertical-align} !important;
+                }
+            }
+        }
+        @include breakpoint-xl {
+            &-xl {
+                &-#{$value} {
+                    vertical-align: #{$vertical-align} !important;
+                }
+            }
+        }
+        @include breakpoint-xxl {
+            &-xxl {
+                &-#{$value} {
+                    vertical-align: #{$vertical-align} !important;
+                }
+            }
+        }
+        @include breakpoint-xxxl {
+            &-xxxl {
+                &-#{$value} {
+                    vertical-align: #{$vertical-align} !important;
+                }
+            }
+        }
+    }
+}

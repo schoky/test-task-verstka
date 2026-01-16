@@ -1,0 +1,7 @@
+@each $pointer-event, $key in $pointer-events {
+    .pointer-events {
+        &-#{$key} {
+            pointer-events: #{$pointer-event};
+        }
+    }
+}
