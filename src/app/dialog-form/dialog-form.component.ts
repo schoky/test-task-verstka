@@ -1,10 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   standalone: true,
   selector: 'app-dialog-form',
   templateUrl: './dialog-form.component.html',
-  styleUrls: ['./dialog-form.component.scss'],
+  styleUrls: ['./dialog-form.component.scss']
 })
 export class DialogFormComponent {
   @Input() title: string = '';

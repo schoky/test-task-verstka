@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang='en' data-critters-container>
+
+<head>
+  <meta charset='utf-8'>
+  <title>MonitorElectric</title>
+  <base href='/angular-test/'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='icon' type='image/x-icon' href='favicon.ico'>
+  <style>
+    :root {
+    --white: #ffffff;
+    --white-rgb: 255, 255, 255;
+    --dark-white: #fafafa;
+    --dark-white-rgb: 250, 250, 250;
+    --dark: #495057;
+    --dark-rgb: 73, 80, 87;
+    --light-grey: #e0e0e0;
+    --light-grey-rgb: 224, 224, 224;
+    --dark-grey: #2b2b2b;
+    --dark-grey-rgb: 43, 43, 43;
+    --grey: #f2f2f2;
+    --grey-rgb: 242, 242, 242;
+    --grey-100: #f7f7f8;
+    --grey-100-rgb: 247, 247, 248;
+    --grey-200: #e7e9eb;
+    --grey-200-rgb: 231, 233, 235;
+    --grey-300: #d2d6da;
+    --grey-300-rgb: 210, 214, 218;
+    --grey-400: #9fa6ad;
+    --grey-400-rgb: 159, 166, 173;
+    --grey-500: #6e7881;
+    --grey-500-rgb: 110, 120, 129;
+    --grey-600: #51585f;
+    --grey-600-rgb: 81, 88, 95;
+    --grey-700: #3f4449;
+    --grey-700-rgb: 63, 68, 73;
+    --grey-800: #2a2d2f;
+    --grey-800-rgb: 42, 45, 47;
+    --grey-900: #222222;
+    --grey-900-rgb: 34, 34, 34;
+    --true-black: #000000;
+    --true-black-rgb: 0, 0, 0;
+    --black: #262122;
+    --black-rgb: 38, 33, 34;
+    --primary: #005baa;
+    --primary-rgb: 0, 91, 170;
+    --cyan: #44fff4;
+    --cyan-rgb: 68, 255, 244;
+    --secondary: #9d9d9d;
+    --secondary-rgb: 157, 157, 157;
+    --success: #3eaf2e;
+    --success-rgb: 62, 175, 46;
+    --warning: #f24822;
+    --warning-rgb: 242, 72, 33;
+    --danger: #fccf19;
+    --danger-rgb: 252, 207, 25;
+    --orange: #ffa629;
+    --orange-rgb: 255, 166, 41;
+    --blue: #02a6e6;
+    --blue-rgb: 2, 166, 230;
+    --purple: #9747ff;
+    --purple-rgb: 151, 71, 255;
+    --green: #65cb82;
+    --green-rgb: 101, 203, 130;
+    --red: #ec7a7a;
+    --red-rgb: 236, 122, 122;
+    --body-bg-color: var(--white-rgb);
+    --body-text-color: var(--black-rgb)
+  }
+
+  *:before, *:after {
+    box-sizing: border-box
+  }
+
+  html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%
+  }
+
+  body {
+    margin: 0
+  }
+
+  :root {
+    font-size: calc(100vw / 375 * 16)
+  }
+
+  @media (min-width: 576px) {
+    :root {
+      font-size: calc(100vw / 576 * 16)
+    }
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      font-size: calc(100vw / 768 * 16)
+    }
+  }
+
+  @media (min-width: 992px) {
+    :root {
+      font-size: calc(100vw / 992 * 16)
+    }
+  }
+
+  @media (min-width: 1200px) {
+    :root {
+      font-size: calc(100vw / 1800 * 16)
+    }
+  }
+
+  :root {
+    --code-content-border-radius: .5rem;
+    --code-title-font-weight: 700;
+    --code-title-color: var(--white);
+    --code-title-background-color: var(--primary-rgb);
+    --code-title-background-opacity: 1;
+    --code-title-padding: .5rem;
+    --code-body-padding: .5rem;
+    --code-body-font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --code-body-font-weight: 500;
+    --code-body-font-size: .875rem;
+    --code-body-background-color: var(--grey-rgb);
+    --code-body-background-opacity: .5;
+    --code-body-white-space: unset
+  }
+
+  :root {
+    --padding-input-y: .5rem;
+    --padding-input-x: .75rem;
+    --form-font-size: .875rem;
+    --form-line-height: 1.2;
+    --form-font-weight: 400;
+    --form-font-color: var(--black-rgb);
+    --form-font-color-opacity: .8;
+    --form-letter-spacing: -.02rem;
+    --form-border-width: .0625rem;
+    --form-border-color: var(--grey-rgb);
+    --form-border-color-opacity: 1;
+    --form-border-radius: .25rem;
+    --form-background-color: var(--white-rgb);
+    --form-background-color-opacity: .5;
+    --form-icon-width: 1rem;
+    --form-icon-height: 1rem
+  }
+
+  :root {
+    --cl-form-input-color: var(--white-rgb);
+    --cl-form-check-bg: rgba(var(--cl-form-input-color), 1);
+    --cl-border-width: .0625rem;
+    --cl-border-color: rgba(var(--form-border-color), 1);
+    --cl-border-radius: .25rem;
+    --cl-checkbox-size: initial;
+    --cl-form-check-label-padding-left: .75rem
+  }
+
+  :root {
+    --range-scrollbar-background-color: var(--dark-grey-rgb);
+    --range-slider-thumb-size: 2rem;
+    --range-slider-thumb-bg: var(--white-rgb);
+    --range-tick-size: .75rem;
+    --range-tick-background-color: var(--secondary-rgb);
+    --list-length: initial
+  }
+
+  :root {
+    --shadow-initial: var(--card-box-shadow);
+    --shadow-none: none
+  }
+
+  :root {
+    --list-padding-x: 1rem;
+    --list-padding-y: 0;
+    --list-item-margin-y: .5rem;
+    --list-item-margin-x: 0;
+    --list-item-padding-y: 0;
+    --list-item-padding-x: 2rem
+  }
+
+  :root {
+    --tab-block-padding-y: .5rem;
+    --tab-block-padding-x: .5rem;
+    --tab-block-border-radius: 7.6875rem;
+    --tab-block-background-color: rgba(var(--secondary-rgb), .8);
+    --tab-block-backdrop-filter: blur(.5rem)
+  }
+
+  body {
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0
+  }
+  </style>
+  <link rel='stylesheet' href='styles-O6ICS4RC.css' media='print'
+        onload="this.media='all'">
+  <noscript>
+    <link rel='stylesheet' href='styles-O6ICS4RC.css'>
+  </noscript>
+</head>
+<body>
+<app-root></app-root>
+<script src='polyfills-6EAL64PA.js' type='module'></script>
+<script src='main-SJUVT7ZR.js' type='module'></script>
+</body>
+
+</html>

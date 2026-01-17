@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   standalone: true,
   imports: [],
   selector: 'app-measurement-form',
   templateUrl: './measurement-form.component.html',
-  styleUrls: ['./measurement-form.component.scss'],
+  styleUrls: ['./measurement-form.component.scss']
 })
 export class MeasurementFormComponent {
   @Output() newMeasurement = new EventEmitter<any>();
@@ -39,7 +39,7 @@ export class MeasurementFormComponent {
       p,
       q,
       cos,
-      selected,
+      selected
     };
     this.newMeasurement.emit(newMeasurement);
   }

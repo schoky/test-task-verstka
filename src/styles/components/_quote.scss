@@ -7,7 +7,7 @@
   --blockquote-title-padding: 0.5rem;
   --blockquote-body-padding: 0.5rem;
   --blockquote-body-font-family: SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  'Liberation Mono', 'Courier New', monospace;
   --blockquote-body-font-weight: 500;
   --blockquote-body-font-size: 0.875rem;
   --blockquote-body-font-style: italic;
@@ -20,23 +20,26 @@
 blockquote {
   margin-left: 0;
   margin-right: 0;
+
   &-content {
     border-radius: var(--blockquote-content-border-radius);
     overflow: hidden;
   }
+
   &-title {
     font-weight: var(--blockquote-title-font-weight);
     background-color: rgba(
-      var(--blockquote-title-background-color),
-      var(--blockquote-title-background-opacity)
+        var(--blockquote-title-background-color),
+        var(--blockquote-title-background-opacity)
     );
     color: var(--blockquote-title-color);
     padding: var(--blockquote-title-padding);
   }
+
   &-body {
     background-color: rgba(
-      var(--blockquote-body-background-color),
-      var(--blockquote-body-background-opacity)
+        var(--blockquote-body-background-color),
+        var(--blockquote-body-background-opacity)
     );
     font-family: var(--blockquote-body-font-family);
     font-weight: var(--blockquote-body-font-weight);

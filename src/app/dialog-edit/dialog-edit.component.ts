@@ -1,10 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   standalone: true,
   selector: 'app-dialog-edit',
   templateUrl: './dialog-edit.component.html',
-  styleUrls: ['./dialog-edit.component.scss'],
+  styleUrls: ['./dialog-edit.component.scss']
 })
 export class DialogEditComponent {
   @Input() title: string = '';

@@ -1,15 +1,15 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   standalone: true,
   imports: [],
   selector: 'app-button',
   template: `
-    <button [class]="classes" [disabled]="disabled" (click)="onClick()">
+    <button [class]='classes' [disabled]='disabled' (click)='onClick()'>
       {{ label }}
     </button>
   `,
-  styleUrls: ['./button.component.scss'],
+  styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
   @Input() label: string = '';

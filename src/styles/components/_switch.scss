@@ -1,10 +1,11 @@
 .form-switch {
   min-height: 1rem;
   padding-left: 2rem;
+
   & .form-check-input {
     #{$prefix}-form-switch-bg: var(--primary);
     #{$prefix}-border-color: var(--primary);
-    #{$prefix}-form-switch-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' rx='12' fill='%23ffffff'/%3E%3C/svg%3E%0A");
+    #{$prefix}-form-switch-image: url('data:image/svg+xml,%3Csvg width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'24\' height=\'24\' rx=\'12\' fill=\'%23ffffff\'/%3E%3C/svg%3E%0A');
     #{$prefix}-border-width: 0.0625rem;
     width: 2rem;
     height: 1rem;
@@ -16,31 +17,35 @@
     background-color: var(#{$prefix}-form-switch-bg);
     border-color: var(#{$prefix}-border-color);
     border-radius: 2rem;
-    transition:
-      background-position 0.15s ease-in-out,
-      background-image 0.15s ease-in-out;
+    transition: background-position 0.15s ease-in-out,
+    background-image 0.15s ease-in-out;
     @media (prefers-reduced-motion: reduce) {
       transition: none;
     }
+
     &:focus:active {
       opacity: 0.95;
     }
+
     &:checked {
       #{$prefix}-form-switch-bg: var(--black);
       #{$prefix}-border-color: var(--black);
-      #{$prefix}-form-switch-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' rx='12' fill='%23ffffff'/%3E%3C/svg%3E%0A");
+      #{$prefix}-form-switch-image: url('data:image/svg+xml,%3Csvg width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'24\' height=\'24\' rx=\'12\' fill=\'%23ffffff\'/%3E%3C/svg%3E%0A');
       background-position: 1.05rem 0.0625rem;
       background-size: 0.75rem 0.75rem;
     }
   }
+
   &.form-check-reverse {
     padding-right: 2.5rem;
     padding-left: 0;
+
     & .form-check-input {
       margin-right: -2.5rem;
       margin-left: 0;
     }
   }
+
   & .form-check-label {
     #{$prefix}-switch-font-size: 1rem;
     #{$prefix}-switch-line-height: 130%;
@@ -54,26 +59,27 @@
     & .form-check-input {
       #{$prefix}-form-switch-bg: transparent;
       #{$prefix}-border-color: rgba(var(--#{$value}-rgb), 0.25);
-      @if $value == "primary" {
+      @if $value == 'primary' {
         #{$prefix}-form-switch-bg: rgba(var(--#{$value}-rgb), 0);
-        #{$prefix}-form-switch-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' rx='12' fill='%23B8CAD5'/%3E%3C/svg%3E%0A");
+        #{$prefix}-form-switch-image: url('data:image/svg+xml,%3Csvg width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'24\' height=\'24\' rx=\'12\' fill=\'%23B8CAD5\'/%3E%3C/svg%3E%0A');
         #{$prefix}-border-color: #b8cad5;
       }
-      @if $value == "secondary" {
+      @if $value == 'secondary' {
         #{$prefix}-form-switch-bg: rgba(var(--#{$value}-rgb), 0);
-        #{$prefix}-form-switch-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' rx='12' fill='%23BFBFBF'/%3E%3C/svg%3E%0A");
+        #{$prefix}-form-switch-image: url('data:image/svg+xml,%3Csvg width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'24\' height=\'24\' rx=\'12\' fill=\'%23BFBFBF\'/%3E%3C/svg%3E%0A');
         #{$prefix}-border-color: rgba(var(--black-rgb), 0.15);
       }
+
       &:checked {
         #{$prefix}-form-switch-bg: rgba(var(--#{$value}-rgb), 0.25);
-        @if $value == "primary" {
+        @if $value == 'primary' {
           #{$prefix}-form-switch-bg: rgba(var(--#{$value}-rgb), 0);
-          #{$prefix}-form-switch-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' rx='12' fill='%23B8CAD5'/%3E%3C/svg%3E%0A");
+          #{$prefix}-form-switch-image: url('data:image/svg+xml,%3Csvg width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'24\' height=\'24\' rx=\'12\' fill=\'%23B8CAD5\'/%3E%3C/svg%3E%0A');
           #{$prefix}-border-color: #b8cad5;
         }
-        @if $value == "secondary" {
+        @if $value == 'secondary' {
           #{$prefix}-form-switch-bg: rgba(var(--#{$value}-rgb), 0);
-          #{$prefix}-form-switch-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' rx='12' fill='%23BFBFBF'/%3E%3C/svg%3E%0A");
+          #{$prefix}-form-switch-image: url('data:image/svg+xml,%3Csvg width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'24\' height=\'24\' rx=\'12\' fill=\'%23BFBFBF\'/%3E%3C/svg%3E%0A');
           #{$prefix}-border-color: rgba(var(--black-rgb), 0.15);
         }
       }
@@ -85,6 +91,7 @@
       & .form-check-input {
         #{$prefix}-form-switch-bg: transparent;
         #{$prefix}-border-color: var(--#{$value});
+
         &:checked {
           #{$prefix}-form-switch-bg: rgba(var(--#{$value}-rgb), 0.25);
           #{$prefix}-border-color: var(--#{$value});

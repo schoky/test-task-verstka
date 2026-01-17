@@ -10,10 +10,12 @@
     height: var(--counter-ellipse-height);
     overflow-clip-margin: border-box;
     overflow: visible;
+
     &-background {
       stroke-width: var(--counter-ellips-stroke-width);
       opacity: 0.5;
     }
+
     &-circle {
       stroke-width: var(--counter-ellips-stroke-width);
       stroke-dasharray: var(--counter-ellipse-value), 100;
@@ -22,10 +24,11 @@
       transform-origin: center;
       transition: stroke-dasharray 0.6s ease;
     }
+
     &-percent {
       alignment-baseline: mathematical;
       text-anchor: middle;
-      font-feature-settings: "clig" off, "liga" off;
+      font-feature-settings: 'clig' off, 'liga' off;
       font-family: Verdana, Geneva, sans-serif;
       font-style: normal;
       font-weight: 600;
@@ -34,13 +37,16 @@
       fill: var(--card-text-color);
     }
   }
+
   &-background {
     display: flex;
+
     &-circles {
       position: relative;
       z-index: 1;
+
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         top: 50%;
         left: 50%;
@@ -54,8 +60,9 @@
         opacity: 0.5;
         transform: translate(-50%, -50%);
       }
+
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         top: 50%;
         left: 50%;

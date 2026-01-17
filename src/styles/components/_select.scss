@@ -1,5 +1,5 @@
 .form-select {
-  #{$prefix}-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  #{$prefix}-form-select-bg-img: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\'%3e%3cpath fill=\'none\' stroke=\'%23343a40\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'m2 5 6 6 6-6\'/%3e%3c/svg%3e');
   #{$prefix}-border-width: 0.0625rem;
   #{$prefix}-form-select-bg: transparent;
   #{$prefix}-form-select-bg-size: 0.75rem;
@@ -14,10 +14,7 @@
   #{$prefix}-form-select-padding-bottom: 0.281rem;
   #{$prefix}-form-select-font-size: 0.875rem;
   display: block;
-  padding: var(#{$prefix}-form-select-padding-top)
-    var(#{$prefix}-form-select-padding-right)
-    var(#{$prefix}-form-select-padding-bottom)
-    var(#{$prefix}-form-select-padding-left);
+  padding: var(#{$prefix}-form-select-padding-top) var(#{$prefix}-form-select-padding-right) var(#{$prefix}-form-select-padding-bottom) var(#{$prefix}-form-select-padding-left);
   font-style: normal;
   font-size: var(#{$prefix}-form-select-font-size);
   font-weight: normal;
@@ -25,7 +22,7 @@
   color: var(#{$prefix}-form-select-color);
   background-color: var(#{$prefix}-form-select-bg);
   background-image: var(#{$prefix}-form-select-bg-img),
-    var(#{$prefix}-form-select-bg-icon, none);
+  var(#{$prefix}-form-select-bg-icon, none);
   background-repeat: no-repeat;
   background-position: right var(#{$prefix}-form-select-bg-size) center;
   background-size: var(#{$prefix}-form-select-bg-size);
@@ -38,30 +35,36 @@
   @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
+
   &:focus {
     border-color: #{darken($secondary, 25%)};
     outline: 0;
   }
+
   &[multiple],
-  &[size]:not([size="1"]) {
+  &[size]:not([size='1']) {
     padding-right: 0.75rem;
     background-image: none;
   }
+
   &:disabled {
     background-color: var(#{$prefix}-secondary-bg);
   }
+
   &:-moz-focusring {
     color: transparent;
     text-shadow: 0 0 0 var(#{$prefix}-body-color);
   }
+
   &-sm {
     #{$prefix}-form-select-font-size: 0.75rem;
   }
+
   &-lg {
     #{$prefix}-form-select-font-size: 1.25rem;
   }
 }
 
-[data-bs-theme="dark"] .form-select {
-  #{$prefix}-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23adb5bd' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+[data-bs-theme='dark'] .form-select {
+  #{$prefix}-form-select-bg-img: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\'%3e%3cpath fill=\'none\' stroke=\'%23adb5bd\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'m2 5 6 6 6-6\'/%3e%3c/svg%3e');
 }

@@ -1,0 +1,57 @@
+@each $display, $value in $displays {
+  .d {
+    &-#{$value} {
+      display: #{$value} !important;
+    }
+
+    @include breakpoint-xs {
+      &-xs {
+        &-#{$value} {
+          display: #{$value} !important;
+        }
+      }
+    }
+    @include breakpoint-sm {
+      &-sm {
+        &-#{$value} {
+          display: #{$value} !important;
+        }
+      }
+    }
+    @include breakpoint-md {
+      &-md {
+        &-#{$value} {
+          display: #{$value} !important;
+        }
+      }
+    }
+    @include breakpoint-lg {
+      &-lg {
+        &-#{$value} {
+          display: #{$value} !important;
+        }
+      }
+    }
+    @include breakpoint-xl {
+      &-xl {
+        &-#{$value} {
+          display: #{$value} !important;
+        }
+      }
+    }
+    @include breakpoint-xxl {
+      &-xxl {
+        &-#{$value} {
+          display: #{$value} !important;
+        }
+      }
+    }
+    @include breakpoint-xxxl {
+      &-xxxl {
+        &-#{$value} {
+          display: #{$value} !important;
+        }
+      }
+    }
+  }
+}

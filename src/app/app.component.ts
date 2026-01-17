@@ -3,32 +3,33 @@ import {
   ElementRef,
   QueryList,
   ViewChild,
-  ViewChildren,
+  ViewChildren
 } from '@angular/core';
-import { NgFor } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { MeasurementFormComponent } from './measurement-form/measurement-form.component';
-import { ButtonComponent } from './button/button.component';
-import { DialogComponent } from './dialog/dialog.component';
-import { DialogFormComponent } from './dialog-form/dialog-form.component';
-import { DialogEditComponent } from './dialog-edit/dialog-edit.component';
+import {NgFor} from '@angular/common';
+import {HeaderComponent} from './header/header.component';
+import {
+  MeasurementFormComponent
+} from './measurement-form/measurement-form.component';
+import {DialogComponent} from './dialog/dialog.component';
+import {DialogFormComponent} from './dialog-form/dialog-form.component';
+import {DialogEditComponent} from './dialog-edit/dialog-edit.component';
 
-// js-solutions
 import '../js/modules/jquery.js';
 import '../js/modules/collapse.js';
 import '../js/modules/resizer.js';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   standalone: true,
 
   imports: [
     NgFor,
-    ButtonComponent,
     HeaderComponent,
     MeasurementFormComponent,
     DialogComponent,
     DialogFormComponent,
     DialogEditComponent,
+    FormsModule
   ],
 
   selector: 'app-root',
@@ -39,8 +40,8 @@ import '../js/modules/resizer.js';
     './button/button.component.scss',
     './dialog/dialog.component.scss',
     './dialog-form/dialog-form.component.scss',
-    './dialog-edit/dialog-edit.component.scss',
-  ],
+    './dialog-edit/dialog-edit.component.scss'
+  ]
 })
 export class AppComponent {
   title = 'monitor-app';
@@ -55,7 +56,7 @@ export class AppComponent {
     'I, A',
     'Р, МВт',
     'Q, Мвар',
-    'coѕ ф',
+    'coѕ ф'
   ];
 
   // Data of the table
@@ -71,7 +72,7 @@ export class AppComponent {
       p: '-',
       q: '-',
       cos: '-',
-      selected: false,
+      selected: false
     },
 
     {
@@ -85,7 +86,7 @@ export class AppComponent {
       p: '-',
       q: '-',
       cos: '-',
-      selected: false,
+      selected: false
     },
 
     {
@@ -99,7 +100,7 @@ export class AppComponent {
       p: '3',
       q: '0.7',
       cos: '0.67',
-      selected: false,
+      selected: false
     },
 
     {
@@ -113,7 +114,7 @@ export class AppComponent {
       p: '2.756',
       q: '0.9',
       cos: '0.83',
-      selected: false,
+      selected: false
     },
 
     {
@@ -127,7 +128,7 @@ export class AppComponent {
       p: '3.143',
       q: '0.78',
       cos: '0.67',
-      selected: false,
+      selected: false
     },
 
     {
@@ -141,7 +142,7 @@ export class AppComponent {
       p: '3.143',
       q: '0.78',
       cos: '0.67',
-      selected: false,
+      selected: false
     },
 
     {
@@ -155,8 +156,8 @@ export class AppComponent {
       p: '3.343',
       q: '0.76',
       cos: '0.65',
-      selected: false,
-    },
+      selected: false
+    }
   ];
 
   // Data of the list headers
@@ -164,47 +165,47 @@ export class AppComponent {
 
   // Data of the list
   listData = [
-    { name: 'PTCH\\HH-1', u: '6' },
+    {name: 'PTCH\\HH-1', u: '6'},
 
-    { name: 'PTCH\\HH-2', u: '6' },
+    {name: 'PTCH\\HH-2', u: '6'},
 
-    { name: 'БТ1\\НН-2', u: '10.5' },
+    {name: 'БТ1\\НН-2', u: '10.5'},
 
-    { name: 'БТ-1\\ВН', u: '110' },
+    {name: 'БТ-1\\ВН', u: '110'}
   ];
 
   // list of substations
   substations: any = [
-    { id: 0, value: 'Выберите подстанцию' },
-    { id: 1, value: 'ТЭЦ ПГУ ГСР Энерго' },
-    { id: 2, value: 'Подстанция 2' },
-    { id: 3, value: 'Подстанция 3' },
-    { id: 4, value: 'Подстанция 4' },
-    { id: 5, value: 'Подстанция 5' },
+    {id: 0, value: 'Выберите подстанцию'},
+    {id: 1, value: 'ТЭЦ ПГУ ГСР Энерго'},
+    {id: 2, value: 'Подстанция 2'},
+    {id: 3, value: 'Подстанция 3'},
+    {id: 4, value: 'Подстанция 4'},
+    {id: 5, value: 'Подстанция 5'}
   ];
 
   // list of equipment
   equipment: any = [
-    { name: '', value: 'Выберите оборудование' },
-    { name: 'tr1', value: 'Трансформатор 1' },
-    { name: 'tr2', value: 'Трансформатор 2' },
-    { name: 'tr3', value: 'Трансформатор 3' },
-    { name: 'tr4', value: 'Трансформатор 4' },
-    { name: 'tr5', value: 'Трансформатор 5' },
+    {name: '', value: 'Выберите оборудование'},
+    {name: 'tr1', value: 'Трансформатор 1'},
+    {name: 'tr2', value: 'Трансформатор 2'},
+    {name: 'tr3', value: 'Трансформатор 3'},
+    {name: 'tr4', value: 'Трансформатор 4'},
+    {name: 'tr5', value: 'Трансформатор 5'}
   ];
 
   // list of equipment types
   equipmentTypes: any = [
-    { name: '', value: 'Выберите тип' },
-    { name: 'transformator', value: 'Трансформаторы' },
-    { name: 'generator', value: 'Генераторы' },
+    {name: '', value: 'Выберите тип'},
+    {name: 'transformator', value: 'Трансформаторы'},
+    {name: 'generator', value: 'Генераторы'}
   ];
 
   // list of RU
   ruValues: any = [
-    { name: '', value: 'Выберите РУ' },
-    { name: 'RU1', value: 'РУ 1' },
-    { name: 'RU2', value: 'РУ 2' },
+    {name: '', value: 'Выберите РУ'},
+    {name: 'RU1', value: 'РУ 1'},
+    {name: 'RU2', value: 'РУ 2'}
   ];
 
   // Set the vars
@@ -306,6 +307,7 @@ export class AppComponent {
   // Save Current Selected Measurement
   @ViewChildren('measurementInput') measurementInputs!: QueryList<ElementRef>;
 
+  // Первая версия функции
   saveMeasurementChanges(measurement: any) {
     measurement.selected = false;
 
@@ -324,7 +326,7 @@ export class AppComponent {
           i: inputValue,
           p: inputValue,
           q: inputValue,
-          cos: inputValue,
+          cos: inputValue
         };
       });
     }
@@ -332,17 +334,19 @@ export class AppComponent {
     console.log('Selected measurements updated:', this.selectedMeasurements);
   }
 
+  // Можно также использовать данную реализацию функции выше
+
   // saveMeasurementChanges(measurement: any) {
   //   measurement.selected = false;
-
+  //
   //   const inputValues = this.measurementInputs.map(
   //     (input) => input.nativeElement.value
   //   );
-
+  //
   //   if (inputValues.length > 0) {
   //     this.selectedMeasurements.forEach((measurement, measurementIndex) => {
   //       const inputValue = inputValues[measurementIndex];
-
+  //
   //       measurement.source = inputValue;
   //       measurement.phase = inputValue;
   //       measurement.u = inputValue;
@@ -352,7 +356,7 @@ export class AppComponent {
   //       measurement.cos = inputValue;
   //     });
   //   }
-
+  //
   //   console.log('Selected measurements updated:', this.selectedMeasurements);
   // }
 

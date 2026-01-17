@@ -1,17 +1,16 @@
 // utility
-@import "./styles/utilities/utility";
+@import './styles/utils/utility';
 
 // normalize
-@import "./styles/utilities/normalize";
+@import './styles/utils/normalize';
 
 // responsive
-@import "./styles/utilities/responsive";
+@import './styles/utils/responsive';
 
 // components
-@import "./styles/components/components";
+@import './styles/components/components';
 
-/* You can add global styles to this file, and also import other style files */
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
 }

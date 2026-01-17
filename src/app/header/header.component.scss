@@ -11,11 +11,13 @@
   padding: var(--header-padding-y) var(--header-padding-x);
   background-color: var(--primary);
   color: var(--white);
+
   &-inner {
     & > .row {
       align-items: center;
     }
   }
+
   &-logo {
     position: relative;
     z-index: 1;
@@ -26,12 +28,14 @@
     row-gap: 1.412rem;
     column-gap: 1.412rem;
   }
+
   &-title {
     font-size: 1.25rem;
     @media (min-width: 768px) {
       font-size: 1.75rem;
     }
   }
+
   &-image {
     position: relative;
     z-index: 1;
@@ -39,6 +43,7 @@
     width: 4.963rem;
     height: 2.875rem;
   }
+
   &-navigation {
     & * {
       &:is(.btn) {
@@ -46,6 +51,7 @@
         --cl-btn-padding-y: 0.625rem;
         --cl-btn-font-size: 1.125rem;
         --cl-btn-size: 1.5rem;
+
         & > svg {
           display: none;
           @media (min-width: 768px) {
@@ -54,6 +60,7 @@
         }
       }
     }
+
     &-view {
       & * {
         &:is(.btn) {

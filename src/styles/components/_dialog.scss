@@ -1,62 +1,69 @@
 .dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1200;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  &::before {
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1200;
-    display: none;
-    opacity: 0;
-    transition: opacity 0.3s;
-    &::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1100;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(var(--grey-900-rgb), 0.85);
+    z-index: 1100;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(var(--grey-900-rgb), 0.85);
+  }
+
+  &-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1201;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.25rem;
+    column-gap: 1.25rem;
+    min-width: 18rem;
+    background-color: var(--white);
+    border: 0.0625rem solid var(--grey-100);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(var(--grey-100-rgb), 0.2);
+    transform: translate(-50%, -50%);
+  }
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+  }
+
+  &-content {
+  }
+
+  &-footer {
+    text-align: right;
+  }
+
+  &.open {
+    display: block;
+    opacity: 1;
+  }
+
+  &-is {
+    &-open {
+      & body {
+        position: static;
+        touch-action: none;
+        overflow: hidden;
+      }
     }
-    &-box {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        z-index: 1201;
-        display: flex;
-        flex-direction: column;
-        row-gap: 1.25rem;
-        column-gap: 1.25rem;
-        min-width: 18rem;
-        background-color: var(--white);
-        border: 0.0625rem solid var(--grey-100);
-        padding: 1rem;
-        border-radius: 1rem;
-        box-shadow: 0 0 1rem rgba(var(--grey-100-rgb), 0.2);
-        transform: translate(-50%, -50%);
-    }
-    &-header {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
-        row-gap: 0.5rem;
-        column-gap: 0.5rem;
-    }
-    &-content {
-    }
-    &-footer {
-        text-align: right;
-    }
-    &.open {
-        display: block;
-        opacity: 1;
-    }
-    &-is {
-        &-open {
-            & body {
-                position: static;
-                touch-action: none;
-                overflow: hidden;
-            }
-        }
-    }
+  }
 }
