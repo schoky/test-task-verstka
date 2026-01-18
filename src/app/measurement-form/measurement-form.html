@@ -2,33 +2,40 @@
   <div class='measurement-form-content'>
     <div class='measurement-form-fields'>
       <input class='form-control form-control-grey w-100' type='text'
-             placeholder='Источник' id='source' #source
-             required/>
+             placeholder='Источник *' id='source' name='source'
+             [(ngModel)]='formData.source' required/>
 
       <input class='form-control form-control-grey w-100' type='text'
-             placeholder='Фаза' id='phase' #phase required/>
+             placeholder='Фаза' id='phase' name='phase'
+             [(ngModel)]='formData.phase'/>
 
       <input class='form-control form-control-grey w-100' type='text'
-             placeholder='U, kB' id='u' #u required/>
+             placeholder='U, kB' id='u' name='u'
+             [(ngModel)]='formData.u'/>
 
       <input class='form-control form-control-grey w-100' type='text'
-             placeholder='I, A' id='i' #i required/>
+             placeholder='I, A' id='i' name='i'
+             [(ngModel)]='formData.i'/>
 
       <input class='form-control form-control-grey w-100' type='text'
-             placeholder='Р, МВт' id='p' #p required/>
+             placeholder='Р, МВт' id='p' name='p'
+             [(ngModel)]='formData.p'/>
 
       <input class='form-control form-control-grey w-100' type='text'
-             placeholder='Q, Мвар' id='q' #q required/>
+             placeholder='Q, Мвар' id='q' name='q'
+             [(ngModel)]='formData.q'/>
 
       <input class='form-control form-control-grey w-100' type='text'
-             placeholder='coѕ ф' id='cos' #cos required/>
+             placeholder='coѕ ф' id='cos' name='cos'
+             [(ngModel)]='formData.cos'/>
     </div>
     <div class='measurement-form-actions'>
       <button type='submit' class='btn btn-sm btn-primary w-100'>
         Добавить
       </button>
 
-      <button type='reset' class='btn btn-sm btn-outline-grey w-100'>
+      <button type='button' class='btn btn-sm btn-outline-grey w-100'
+              (click)='resetForm()'>
         Сбросить
       </button>
     </div>

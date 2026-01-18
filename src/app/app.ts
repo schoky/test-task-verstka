@@ -1,11 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  QueryList,
-  ViewChild,
-  ViewChildren
-} from '@angular/core';
-import {NgFor} from '@angular/common';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 import {HeaderComponent} from './header/header.component';
 import {
   MeasurementFormComponent
@@ -13,17 +8,16 @@ import {
 import {DialogComponent} from './dialog/dialog.component';
 import {DialogForm} from './dialog-form/dialog-form';
 import {DialogEdit} from './dialog-edit/dialog-edit';
+import {DataService, Measurement, Substation} from './services/data.service';
 
 import '../js/modules/jquery.js';
 import '../js/modules/collapse.js';
 import '../js/modules/resizer.js';
-import {FormsModule} from '@angular/forms';
 
 @Component({
   standalone: true,
-
   imports: [
-    NgFor,
+    CommonModule,
     HeaderComponent,
     MeasurementFormComponent,
     DialogComponent,
@@ -31,7 +25,6 @@ import {FormsModule} from '@angular/forms';
     DialogEdit,
     FormsModule
   ],
-
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrls: [
@@ -43,10 +36,10 @@ import {FormsModule} from '@angular/forms';
     './dialog-edit/dialog-edit.scss'
   ]
 })
-export class App {
+export class App implements OnInit {
   title = 'monitor-app';
 
-  // Data of the table headers
+  // Data
   measurementHeaders = [
     'Дата',
     'Время',
@@ -58,134 +51,16 @@ export class App {
     'Q, Мвар',
     'coѕ ф'
   ];
-
-  // Data of the table
-  measurements = [
-    {
-      id: 1,
-      date: '30.07.2022',
-      time: '10:15:23',
-      source: 'Оператор',
-      phase: '-',
-      u: '-',
-      i: '-',
-      p: '-',
-      q: '-',
-      cos: '-',
-      selected: false
-    },
-
-    {
-      id: 2,
-      date: '30.07.2022',
-      time: '10:08:44',
-      source: 'Оператор',
-      phase: '-',
-      u: '-',
-      i: '-',
-      p: '-',
-      q: '-',
-      cos: '-',
-      selected: false
-    },
-
-    {
-      id: 3,
-      date: '29.07.2022',
-      time: '15:08:44',
-      source: 'Оператор',
-      phase: 'a',
-      u: '1',
-      i: '0.5',
-      p: '3',
-      q: '0.7',
-      cos: '0.67',
-      selected: false
-    },
-
-    {
-      id: 4,
-      date: '12.06.2022',
-      time: '10:28:02',
-      source: 'SCADA',
-      phase: 'b',
-      u: '1',
-      i: '0.6',
-      p: '2.756',
-      q: '0.9',
-      cos: '0.83',
-      selected: false
-    },
-
-    {
-      id: 5,
-      date: '05.05.2022',
-      time: '13:56:39',
-      source: 'АСКУЭ',
-      phase: 'c',
-      u: '1.2',
-      i: '0.5',
-      p: '3.143',
-      q: '0.78',
-      cos: '0.67',
-      selected: false
-    },
-
-    {
-      id: 6,
-      date: '05.05.2022',
-      time: '13:56:39',
-      source: 'АСКУЭ',
-      phase: 'c',
-      u: '1.2',
-      i: '0.5',
-      p: '3.143',
-      q: '0.78',
-      cos: '0.67',
-      selected: false
-    },
-
-    {
-      id: 7,
-      date: '02.03.2022',
-      time: '17:43:51',
-      source: 'Регистратор',
-      phase: 'ab',
-      u: '1.1',
-      i: '0.4',
-      p: '3.343',
-      q: '0.76',
-      cos: '0.65',
-      selected: false
-    }
-  ];
-
-  // Data of the list headers
-  listHeaders = ['Наименование', 'U ном.'];
-
-  // Data of the list
+  measurements: Measurement[] = [];
   listData = [
     {name: 'PTCH\\HH-1', u: '6'},
-
     {name: 'PTCH\\HH-2', u: '6'},
-
     {name: 'БТ1\\НН-2', u: '10.5'},
-
     {name: 'БТ-1\\ВН', u: '110'}
   ];
-
-  // list of substations
-  substations: any = [
-    {id: 0, value: 'Выберите подстанцию'},
-    {id: 1, value: 'ТЭЦ ПГУ ГСР Энерго'},
-    {id: 2, value: 'Подстанция 2'},
-    {id: 3, value: 'Подстанция 3'},
-    {id: 4, value: 'Подстанция 4'},
-    {id: 5, value: 'Подстанция 5'}
-  ];
-
-  // list of equipment
-  equipment: any = [
+  substations: Substation[] = [];
+  selectedSubstation: Substation = {id: 0, value: 'Выберите подстанцию'};
+  equipment = [
     {name: '', value: 'Выберите оборудование'},
     {name: 'tr1', value: 'Трансформатор 1'},
     {name: 'tr2', value: 'Трансформатор 2'},
@@ -193,217 +68,293 @@ export class App {
     {name: 'tr4', value: 'Трансформатор 4'},
     {name: 'tr5', value: 'Трансформатор 5'}
   ];
-
-  // list of equipment types
-  equipmentTypes: any = [
+  equipmentTypes = [
     {name: '', value: 'Выберите тип'},
     {name: 'transformator', value: 'Трансформаторы'},
     {name: 'generator', value: 'Генераторы'}
   ];
-
-  // list of RU
-  ruValues: any = [
+  ruValues = [
     {name: '', value: 'Выберите РУ'},
     {name: 'RU1', value: 'РУ 1'},
     {name: 'RU2', value: 'РУ 2'}
   ];
 
-  // Set the vars
-  selectedMeasurement: any;
-  selectedMeasurements = this.measurements;
+  // State
+  selectedMeasurement: Measurement | null = null;
   selectAll: boolean = false;
-  selectedSubstation: any = this.substations[0].value;
-  selectedEquipmentType: string = 'transformator';
-  selectedRU: string = 'RU1';
+  isGroupedByDate: boolean = false; // Флаг для группировки по дате
+  activeTab: string = 'equipment';
+  viewMode: string = 'list';
 
-  // Sort
-  sortDirection = 'asc';
+  // Dialog inputs for editing
+  editFormData = {
+    date: '',
+    time: '',
+    source: '',
+    phase: '',
+    u: '',
+    i: '',
+    p: '',
+    q: '',
+    cos: ''
+  };
 
-  sortedColumn = '';
+  // Dialogs
+  @ViewChild('dialog') dialog: DialogComponent | undefined;
+  @ViewChild('dialogForm') dialogForm: DialogForm | undefined;
+  @ViewChild('dialogEdit') dialogEdit: DialogEdit | undefined;
+  @ViewChild('confirmDialog') confirmDialog: DialogComponent | undefined;
 
-  // Selected substations
-  selectSubstation(substation: any) {
-    this.selectedSubstation = substation;
-    this.closeDialog();
+  constructor(private dataService: DataService) {
   }
 
-  toggleSort(column: string) {
-    if (this.sortedColumn === column) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.sortedColumn = column;
+  ngOnInit(): void {
+    this.dataService.getMeasurements().subscribe(measurements => {
+      this.measurements = measurements;
+      this.sortMeasurements(); // Сортировка при загрузке
+    });
+    this.dataService.getSubstations().subscribe(substations => {
+      this.substations = substations;
+    });
+    this.dataService.getSelectedSubstation().subscribe(substation => {
+      this.selectedSubstation = substation;
+    });
+    this.dataService.getActiveTab().subscribe(tab => {
+      this.activeTab = tab;
+    });
+    this.dataService.getViewMode().subscribe(mode => {
+      this.viewMode = mode;
+    });
+  }
 
-      this.sortDirection = 'asc';
-    }
+  // Helper methods for template
+  hasSelectedMeasurements(): boolean {
+    return this.measurements.some(m => m.selected);
+  }
 
+  getSelectedMeasurementsCount(): number {
+    return this.measurements.filter(m => m.selected).length;
+  }
+
+  hasSingleSelected(): boolean {
+    return this.getSelectedMeasurementsCount() === 1;
+  }
+
+  // Методы для проверенных замеров
+  hasVerifiedMeasurements(): boolean {
+    return this.measurements.some(m => m.verified);
+  }
+
+  getVerifiedMeasurementsCount(): number {
+    return this.measurements.filter(m => m.verified).length;
+  }
+
+  resetAllVerifications(): void {
+    // Сброс всех проверенных замеров
+    const updates = this.measurements
+    .filter(m => m.verified)
+    .map(m => ({id: m.id, changes: {verified: false}}));
+
+    updates.forEach(({id, changes}) => {
+      this.dataService.updateMeasurement(id, changes);
+    });
+  }
+
+  // Сортировка по дате
+  toggleGroupByDate(): void {
+    this.isGroupedByDate = !this.isGroupedByDate;
     this.sortMeasurements();
   }
 
-  sortMeasurements() {
-    if (this.sortedColumn === 'date') {
+  sortMeasurements(): void {
+    if (this.isGroupedByDate) {
+      // Сортировка по убыванию даты (самые свежие первыми)
       this.measurements.sort((a, b) => {
-        const dateA = a.date.split('.').map(Number);
-        const dateB = b.date.split('.').map(Number);
-        if (this.sortDirection === 'asc') {
-          if (dateA[2] !== dateB[2]) return dateA[2] - dateB[2];
-          if (dateA[1] !== dateB[1]) return dateA[1] - dateB[1];
-          return dateA[0] - dateB[0]; // day
-        } else {
-          if (dateA[2] !== dateB[2]) return dateB[2] - dateA[2];
-          if (dateA[1] !== dateB[1]) return dateB[1] - dateA[1];
-          return dateB[0] - dateA[0]; // day
-        }
+        // Преобразуем дату в формат для сравнения: гггг-мм-дд
+        const dateA = this.parseDateToTimestamp(a.date, a.time);
+        const dateB = this.parseDateToTimestamp(b.date, b.time);
+
+        // Сортируем по убыванию (новые первыми)
+        return dateB - dateA;
       });
+    } else {
+      // Сортировка по ID (оригинальный порядок)
+      this.measurements.sort((a, b) => a.id - b.id);
     }
   }
 
-  // Check if a measurement is checked
-  isChecked(measurement: any) {
-    return measurement.checked;
+  private parseDateToTimestamp(dateStr: string, timeStr: string): number {
+    try {
+      // Формат даты: дд.мм.гггг
+      const [day, month, year] = dateStr.split('.').map(Number);
+      // Формат времени: чч:мм:сс
+      const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+
+      return new Date(year, month - 1, day, hours, minutes, seconds).getTime();
+    } catch (error) {
+      console.error('Ошибка парсинга даты:', error);
+      return 0;
+    }
   }
 
-  // Toggle checked state of a measurement
-  toggleSelect(measurement: any) {
-    measurement.selected
-      ? (measurement.selected = false)
-      : (measurement.selected = true);
-
-    return this.selectedMeasurement;
+  // Substation selection
+  selectSubstation(substationValue: string): void {
+    const substation = this.substations.find(s => s.value === substationValue);
+    if (substation) {
+      this.dataService.setSelectedSubstation(substation);
+      this.closeDialog();
+    }
   }
 
-  // Toggle checked state for all measurements
-  toggleSelectAll(event: any) {
+  // Tabs and view modes
+  setActiveTab(tab: string): void {
+    this.dataService.setActiveTab(tab);
+  }
+
+  setViewMode(mode: string): void {
+    this.dataService.setViewMode(mode);
+  }
+
+  // Selection
+  isChecked(measurement: Measurement): boolean {
+    return measurement.selected;
+  }
+
+  toggleSelect(measurement: Measurement): void {
+    this.dataService.updateMeasurement(measurement.id, {selected: !measurement.selected});
+  }
+
+  toggleSelectAll(event: any): void {
     const selectAll = event.target.checked;
-
-    this.measurements.forEach((m) => (m.selected = selectAll));
+    this.dataService.toggleSelectAll(selectAll);
   }
 
-  // add New Measurement
-  addNewMeasurement(measurement: any) {
-    this.measurements.push(measurement);
+  // Add new measurement
+  addNewMeasurement(measurementData: any): void {
+    const newMeasurement: Omit<Measurement, 'id' | 'selected' | 'verified'> = {
+      date: measurementData.date || this.getCurrentDate(),
+      time: measurementData.time || this.getCurrentTime(),
+      source: measurementData.source,
+      phase: measurementData.phase,
+      u: measurementData.u,
+      i: measurementData.i,
+      p: measurementData.p,
+      q: measurementData.q,
+      cos: measurementData.cos
+    };
+    this.dataService.addMeasurement(newMeasurement);
+    this.closeDialogForm();
   }
 
-  // Select Measurement
-  selectMeasurement(measurement: any) {
-    this.selectedMeasurement = measurement;
-  }
-
-  // get Selected Measurement
-  getSelectedMeasurementId() {
-    return this.selectedMeasurement?.id;
-  }
-
-  // edit Measurement fuinction
-  editMeasurement() {
-    this.selectedMeasurements = this.measurements.filter((m) => m.selected);
-    if (
-      this.selectedMeasurements.length > 0 &&
-      this.selectedMeasurements.length < 2
-    ) {
+  // Edit measurement
+  editMeasurement(): void {
+    const selected = this.measurements.filter(m => m.selected);
+    if (selected.length === 1) {
+      this.selectedMeasurement = selected[0];
+      // Заполняем форму данными
+      this.editFormData = {
+        date: this.selectedMeasurement.date,
+        time: this.selectedMeasurement.time,
+        source: this.selectedMeasurement.source,
+        phase: this.selectedMeasurement.phase,
+        u: this.selectedMeasurement.u,
+        i: this.selectedMeasurement.i,
+        p: this.selectedMeasurement.p,
+        q: this.selectedMeasurement.q,
+        cos: this.selectedMeasurement.cos
+      };
       this.openDialogEdit();
     }
   }
 
-  // Save Current Selected Measurement
-  @ViewChildren('measurementInput') measurementInputs!: QueryList<ElementRef>;
+  saveMeasurementChanges(): void {
+    if (!this.selectedMeasurement) return;
 
-  // Первая версия функции
-  saveMeasurementChanges(measurement: any) {
-    measurement.selected = false;
+    const updated: Partial<Measurement> = {
+      date: this.editFormData.date,
+      time: this.editFormData.time,
+      source: this.editFormData.source,
+      phase: this.editFormData.phase,
+      u: this.editFormData.u,
+      i: this.editFormData.i,
+      p: this.editFormData.p,
+      q: this.editFormData.q,
+      cos: this.editFormData.cos,
+      selected: false
+    };
 
-    const inputValues = this.measurementInputs.map(
-      (input) => input.nativeElement.value
-    );
-
-    if (inputValues.length > 0) {
-      this.selectedMeasurements.forEach((measurement, measurementIndex) => {
-        const inputValue = inputValues[measurementIndex];
-        measurement = {
-          ...measurement,
-          source: inputValue,
-          phase: inputValue,
-          u: inputValue,
-          i: inputValue,
-          p: inputValue,
-          q: inputValue,
-          cos: inputValue
-        };
-      });
-    }
-
-    console.log('Selected measurements updated:', this.selectedMeasurements);
+    this.dataService.updateMeasurement(this.selectedMeasurement.id, updated);
+    this.closeDialogEdit();
   }
 
-  // Можно также использовать данную реализацию функции выше
-
-  // saveMeasurementChanges(measurement: any) {
-  //   measurement.selected = false;
-  //
-  //   const inputValues = this.measurementInputs.map(
-  //     (input) => input.nativeElement.value
-  //   );
-  //
-  //   if (inputValues.length > 0) {
-  //     this.selectedMeasurements.forEach((measurement, measurementIndex) => {
-  //       const inputValue = inputValues[measurementIndex];
-  //
-  //       measurement.source = inputValue;
-  //       measurement.phase = inputValue;
-  //       measurement.u = inputValue;
-  //       measurement.i = inputValue;
-  //       measurement.p = inputValue;
-  //       measurement.q = inputValue;
-  //       measurement.cos = inputValue;
-  //     });
-  //   }
-  //
-  //   console.log('Selected measurements updated:', this.selectedMeasurements);
-  // }
-
-  // remove Measurement
-  removeMeasurement() {
-    this.measurements = this.measurements.filter((m) => !m.selected);
-  }
-
-  // check dialogs
-  @ViewChild('dialog') dialog: DialogComponent | undefined;
-  @ViewChild('dialogForm') dialogForm: DialogForm | undefined;
-  @ViewChild('dialogEdit') dialogEdit: DialogEdit | undefined;
-
-  // callback dialogs
-  openDialog() {
-    if (this.dialog) {
-      this.dialog.open();
+  // Delete measurement with confirmation
+  removeMeasurement(): void {
+    if (this.hasSelectedMeasurements()) {
+      this.openConfirmDialog();
     }
   }
 
-  openDialogForm() {
-    if (this.dialogForm) {
-      this.dialogForm.open();
-    }
+  confirmDelete(): void {
+    this.dataService.deleteSelectedMeasurements();
+    this.closeConfirmDialog();
   }
 
-  openDialogEdit() {
-    if (this.dialogEdit) {
-      this.dialogEdit.open();
-    }
+  // Verify buttons
+  verifySelected(): void {
+    this.dataService.toggleVerifySelected(true);
   }
 
-  closeDialog() {
-    if (this.dialog) {
-      this.dialog.close();
-    }
+  unverifySelected(): void {
+    this.dataService.toggleVerifySelected(false);
   }
 
-  closeDialogForm() {
-    if (this.dialogForm) {
-      this.dialogForm.close();
-    }
+  // Dialog controls
+  openDialog(): void {
+    this.dialog?.open();
   }
 
-  closeDialogEdit() {
-    if (this.dialogEdit) {
-      this.dialogEdit.close();
-    }
+  openDialogForm(): void {
+    this.dialogForm?.open();
+  }
+
+  openDialogEdit(): void {
+    this.dialogEdit?.open();
+  }
+
+  openConfirmDialog(): void {
+    this.confirmDialog?.open();
+  }
+
+  closeDialog(): void {
+    this.dialog?.close();
+  }
+
+  closeDialogForm(): void {
+    this.dialogForm?.close();
+  }
+
+  closeDialogEdit(): void {
+    this.dialogEdit?.close();
+  }
+
+  closeConfirmDialog(): void {
+    this.confirmDialog?.close();
+  }
+
+  // Helpers
+  getCurrentDate(): string {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    return `${day}.${month}.${year}`;
+  }
+
+  getCurrentTime(): string {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
   }
 }

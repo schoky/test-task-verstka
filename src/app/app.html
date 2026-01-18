@@ -41,7 +41,8 @@
           </app-dialog>
 
           <span> > </span>
-          <span class='left-panel-selected'>{{ selectedSubstation }}</span>
+          <span
+            class='left-panel-selected'>{{ selectedSubstation.value }}</span>
         </div>
         <div class='left-panel-state'>
           <button class='btn btn-sm btn-icon btn-primary w-xs-100 w-sm-100'>
@@ -61,30 +62,34 @@
       </div>
 
       <div class='tab-header'>
-        <button for='substations' class='tab-link'>Подстанция</button>
-        <select class='form-select d-none' id='substations'>
-          <option value='{{ item.name }}' *ngFor='let item of substations'>
-            {{ item.value }}
-          </option>
-        </select>
-
-        <button for='equipment' class='tab-link active'>Оборудование</button>
-        <select class='form-select d-none' id='equipment'>
-          <option value='{{ item.name }}' *ngFor='let item of equipment'>
-            {{ item.value }}
-          </option>
-        </select>
+        <button
+          class='tab-link'
+          [class.active]="activeTab === 'substation'"
+          (click)="setActiveTab('substation')">
+          Подстанция
+        </button>
+        <button
+          class='tab-link'
+          [class.active]="activeTab === 'equipment'"
+          (click)="setActiveTab('equipment')">
+          Оборудование
+        </button>
       </div>
 
       <div class='list-container'>
         <div class='btn-group'>
           <button
             type='button'
-            class='btn btn-sm btn-icon btn-outline-grey active'
-          >
+            class='btn btn-sm btn-icon btn-outline-grey'
+            [class.active]="viewMode === 'list'"
+            (click)="setViewMode('list')">
             Список
           </button>
-          <button type='button' class='btn btn-sm btn-icon btn-outline-grey'>
+          <button
+            type='button'
+            class='btn btn-sm btn-icon btn-outline-grey'
+            [class.active]="viewMode === 'sheet'"
+            (click)="setViewMode('sheet')">
             Ведомость
           </button>
         </div>
@@ -119,18 +124,13 @@
               </div>
             </div>
             <div class='col-auto'>
-              <div
-                class='form-check form-switch form-switch-secondary form-switch-colored'
+              <button
+                class='btn btn-sm btn-icon btn-outline-primary btn-colored'
+                (click)='resetAllVerifications()'
+                [disabled]='!hasVerifiedMeasurements()'
               >
-                <input
-                  class='form-check-input'
-                  type='checkbox'
-                  value=''
-                  role='switch'
-                  id='scheme'
-                />
-                <label class='form-check-label' for='scheme'> Схема </label>
-              </div>
+                <span class='btn-icon-text'>Сбросить все проверки </span>
+              </button>
             </div>
           </div>
         </div>
@@ -209,6 +209,8 @@
               <div class='col-auto'>
                 <button
                   class='btn btn-sm btn-icon btn-outline-primary btn-colored'
+                  (click)='verifySelected()'
+                  [disabled]='!hasSelectedMeasurements()'
                 >
                   <svg
                     width='1rem'
@@ -228,6 +230,8 @@
               <div class='col-auto'>
                 <button
                   class='btn btn-sm btn-icon btn-outline-primary btn-colored'
+                  (click)='unverifySelected()'
+                  [disabled]='!hasSelectedMeasurements()'
                 >
                   <svg
                     width='1rem'
@@ -246,6 +250,7 @@
                 <button
                   class='btn btn-sm btn-icon btn-outline-primary btn-colored'
                   (click)='editMeasurement()'
+                  [disabled]='!hasSingleSelected()'
                 >
                   <svg
                     width='1rem'
@@ -260,109 +265,150 @@
                   <span class='btn-icon-text'> Редактировать </span>
                 </button>
                 <app-dialog-edit #dialogEdit title='Редактировать данные'>
-                  <form
-                    class='dialog-edit mt-2'
-                    (ngSubmit)='saveMeasurementChanges(selectedMeasurement)'
-                  >
-                    <div class='dialog-edit-content'>
-                      <div
-                        class='dialog-edit-fields'
-                        *ngFor='
-                          let measurement of selectedMeasurements;
-                          let i = index
-                        '
-                      >
-                        <input
-                          class='form-control form-control-grey w-100'
-                          type='text'
-                          placeholder='Источник'
-                          id='sourceSelectedEdit'
-                          [value]='selectedMeasurement?.source'
-                          #measurementInput
-                        />
+                  <div *ngIf='selectedMeasurement'>
+                    <form
+                      class='dialog-edit mt-2'
+                      (ngSubmit)='saveMeasurementChanges()'
+                    >
+                      <div class='dialog-edit-content'>
+                        <div class='dialog-edit-fields'>
+                          <!-- Дата -->
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='Дата (дд.мм.гггг)'
+                            id='dateSelectedEdit'
+                            name='date'
+                            [(ngModel)]='editFormData.date'
+                            required
+                            pattern='\d{2}\.\d{2}\.\d{4}'
+                            title='Формат даты: дд.мм.гггг'
+                            style='padding-right: 0'
+                          />
 
-                        <input
-                          class='form-control form-control-grey w-100'
-                          type='text'
-                          placeholder='Фаза'
-                          id='phaseSelectedEdit'
-                          [value]='selectedMeasurement?.phase'
-                          #measurementInput
-                        />
+                          <!-- Время -->
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='Время (чч:мм:сс)'
+                            id='timeSelectedEdit'
+                            name='time'
+                            [(ngModel)]='editFormData.time'
+                            required
+                            pattern='\d{2}:\d{2}:\d{2}'
+                            title='Формат времени: чч:мм:сс'
+                            style='padding-right: 0'
+                          />
 
-                        <input
-                          class='form-control form-control-grey w-100'
-                          type='text'
-                          placeholder='U, kB'
-                          id='uSelectedEdit'
-                          [value]='selectedMeasurement?.u'
-                          #measurementInput
-                        />
+                          <!-- Источник -->
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='Источник'
+                            id='sourceSelectedEdit'
+                            name='source'
+                            [(ngModel)]='editFormData.source'
+                            required
+                            style='padding-right: 0'
+                          />
 
-                        <input
-                          class='form-control form-control-grey w-100'
-                          type='text'
-                          placeholder='I, A'
-                          id='iSelectedEdit'
-                          [value]='selectedMeasurement?.i'
-                          #measurementInput
-                        />
+                          <!-- Остальные поля (только для чтения или скрытые) -->
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='Фаза'
+                            id='phaseSelectedEdit'
+                            name='phase'
+                            [(ngModel)]='editFormData.phase'
+                            readonly
+                            style='background-color: #f5f5f5;'
+                          />
 
-                        <input
-                          class='form-control form-control-grey w-100'
-                          type='text'
-                          placeholder='Р, МВт'
-                          id='pSelectedEdit'
-                          [value]='selectedMeasurement?.p'
-                          #measurementInput
-                        />
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='U, kB'
+                            id='uSelectedEdit'
+                            name='u'
+                            [(ngModel)]='editFormData.u'
+                            readonly
+                            style='background-color: #f5f5f5;'
+                          />
 
-                        <input
-                          class='form-control form-control-grey w-100'
-                          type='text'
-                          placeholder='Q, Мвар'
-                          id='qSelectedEdit'
-                          [value]='selectedMeasurement?.q'
-                          #measurementInput
-                        />
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='I, A'
+                            id='iSelectedEdit'
+                            name='i'
+                            [(ngModel)]='editFormData.i'
+                            readonly
+                            style='background-color: #f5f5f5;'
+                          />
 
-                        <input
-                          class='form-control form-control-grey w-100'
-                          type='text'
-                          placeholder='coѕ ф'
-                          id='cosSelectedEdit'
-                          [value]='selectedMeasurement?.cos'
-                          #measurementInput
-                        />
-                      </div>
-                      <div class='dialog-edit-actions'>
-                        <button
-                          class='btn btn-primary btn-icon'
-                          (click)='saveMeasurementChanges(selectedMeasurement)'
-                        >
-                          <svg
-                            width='1rem'
-                            height='1rem'
-                            fill='none'
-                            xmlns='http://www.w3.org/2000/svg'
-                            aria-hidden='true'
-                            focusable='false'
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='Р, МВт'
+                            id='pSelectedEdit'
+                            name='p'
+                            [(ngModel)]='editFormData.p'
+                            readonly
+                            style='background-color: #f5f5f5;'
+                          />
+
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='Q, Мвар'
+                            id='qSelectedEdit'
+                            name='q'
+                            [(ngModel)]='editFormData.q'
+                            readonly
+                            style='background-color: #f5f5f5;'
+                          />
+
+                          <input
+                            class='form-control form-control-grey w-100'
+                            type='text'
+                            placeholder='coѕ ф'
+                            id='cosSelectedEdit'
+                            name='cos'
+                            [(ngModel)]='editFormData.cos'
+                            readonly
+                            style='background-color: #f5f5f5;'
+                          />
+                        </div>
+                        <div class='dialog-edit-actions'>
+                          <button
+                            type='submit'
+                            class='btn btn-primary btn-icon'
                           >
-                            <use
-                              xlink:href='/angular-test/sprite.svg#save'
-                            ></use>
-                          </svg>
-                          <span class='btn-icon-text'> Сохранить </span>
-                        </button>
+                            <svg
+                              width='1rem'
+                              height='1rem'
+                              fill='none'
+                              xmlns='http://www.w3.org/2000/svg'
+                              aria-hidden='true'
+                              focusable='false'
+                            >
+                              <use
+                                xlink:href='/angular-test/sprite.svg#save'
+                              ></use>
+                            </svg>
+                            <span class='btn-icon-text'> Сохранить </span>
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </app-dialog-edit>
               </div>
               <div class='col-auto'>
                 <button
                   class='btn btn-sm btn-icon btn-outline-primary btn-colored'
                   (click)='removeMeasurement()'
+                  [disabled]='!hasSelectedMeasurements()'
                 >
                   <svg
                     width='1rem'
@@ -432,17 +478,25 @@
 
       <div class='right-panel-options'>
         <div class='message'>
-          <span class='text-warning'>Нет</span> проверенных замеров
+          <ng-container
+            *ngIf='!hasVerifiedMeasurements(); else hasMeasurements'>
+            <span class='text-warning'>Нет проверенных замеров</span>
+          </ng-container>
+
+          <ng-template #hasMeasurements>
+            <span class='text-success'>Есть проверенные замеры</span>
+            <span> ({{ getVerifiedMeasurementsCount() }})</span>
+          </ng-template>
         </div>
 
         <div class='form-check form-switch form-switch-primary'>
           <input
             class='form-check-input'
             type='checkbox'
-            value=''
+            [checked]='isGroupedByDate'
             role='switch'
             id='group-by-date'
-            (change)="toggleSort('date')"
+            (change)='toggleGroupByDate()'
           />
           <label class='form-check-label' for='group-by-date'>
             Группировать по дате
@@ -497,34 +551,30 @@
               </app-dialog-form>
             </td>
           </tr>
-          <tr *ngFor='let measurement of measurements'>
+          <tr *ngFor='let measurement of measurements'
+              [class.verified]='measurement.verified'>
             <td class='form-check-primary'>
               <div class='form-check form-check-single'>
                 <input
                   class='form-check-input'
                   type='checkbox'
-                  [checked]='isChecked(measurement)'
+                  [checked]='measurement.selected'
                   (change)='toggleSelect(measurement)'
-                  (click)='selectMeasurement(measurement)'
                 />
               </div>
             </td>
             <td>{{ measurement.date }}</td>
-
             <td>{{ measurement.time }}</td>
-
-            <td>{{ measurement.source }}</td>
-
+            <td>
+              {{ measurement.source }}
+              <span *ngIf='measurement.verified' class='verified-badge'
+                    title='Проверено'>✓</span>
+            </td>
             <td>{{ measurement.phase }}</td>
-
             <td>{{ measurement.u }}</td>
-
             <td>{{ measurement.i }}</td>
-
             <td>{{ measurement.p }}</td>
-
             <td>{{ measurement.q }}</td>
-
             <td>{{ measurement.cos }}</td>
           </tr>
           </tbody>
@@ -535,3 +585,15 @@
 
   <div class='footer'>Версия 11.6.5.41</div>
 </div>
+
+<!-- Dialog for confirmation -->
+<app-dialog #confirmDialog title='Подтверждение удаления'>
+  <p>Вы уверены, что хотите удалить выбранные замеры?</p>
+  <div class='dialog-footer mt-3'>
+    <button class='btn btn-sm btn-primary' (click)='confirmDelete()'>Удалить
+    </button>
+    <button class='btn btn-sm btn-outline-grey ml-2'
+            (click)='closeConfirmDialog()'>Отмена
+    </button>
+  </div>
+</app-dialog>
