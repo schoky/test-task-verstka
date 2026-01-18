@@ -9,9 +9,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
       {{ label }}
     </button>
   `,
-  styleUrls: ['./button.component.scss']
+  styleUrls: ['./button.scss']
 })
-export class ButtonComponent {
+export class Button {
   @Input() label: string = '';
 
   @Input() classes: string = '';

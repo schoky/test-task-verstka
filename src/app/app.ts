@@ -11,8 +11,8 @@ import {
   MeasurementFormComponent
 } from './measurement-form/measurement-form.component';
 import {DialogComponent} from './dialog/dialog.component';
-import {DialogFormComponent} from './dialog-form/dialog-form.component';
-import {DialogEditComponent} from './dialog-edit/dialog-edit.component';
+import {DialogForm} from './dialog-form/dialog-form';
+import {DialogEdit} from './dialog-edit/dialog-edit';
 
 import '../js/modules/jquery.js';
 import '../js/modules/collapse.js';
@@ -27,23 +27,23 @@ import {FormsModule} from '@angular/forms';
     HeaderComponent,
     MeasurementFormComponent,
     DialogComponent,
-    DialogFormComponent,
-    DialogEditComponent,
+    DialogForm,
+    DialogEdit,
     FormsModule
   ],
 
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  templateUrl: './app.html',
   styleUrls: [
-    './app.component.scss',
-    './header/header.component.scss',
-    './button/button.component.scss',
-    './dialog/dialog.component.scss',
-    './dialog-form/dialog-form.component.scss',
-    './dialog-edit/dialog-edit.component.scss'
+    './app.scss',
+    './header/header.scss',
+    './button/button.scss',
+    './dialog/dialog.scss',
+    './dialog-form/dialog-form.scss',
+    './dialog-edit/dialog-edit.scss'
   ]
 })
-export class AppComponent {
+export class App {
   title = 'monitor-app';
 
   // Data of the table headers
@@ -367,8 +367,8 @@ export class AppComponent {
 
   // check dialogs
   @ViewChild('dialog') dialog: DialogComponent | undefined;
-  @ViewChild('dialogForm') dialogForm: DialogFormComponent | undefined;
-  @ViewChild('dialogEdit') dialogEdit: DialogEditComponent | undefined;
+  @ViewChild('dialogForm') dialogForm: DialogForm | undefined;
+  @ViewChild('dialogEdit') dialogEdit: DialogEdit | undefined;
 
   // callback dialogs
   openDialog() {

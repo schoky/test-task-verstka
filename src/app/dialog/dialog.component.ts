@@ -3,8 +3,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 @Component({
   standalone: true,
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  templateUrl: './dialog.html',
+  styleUrls: ['./dialog.scss']
 })
 export class DialogComponent {
   @Input() title: string = '';

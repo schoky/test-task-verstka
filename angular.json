@@ -5,7 +5,11 @@
   "projects": {
     "todo": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@scematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   standalone: true,
-  selector: 'app-dialog-form',
-  templateUrl: './dialog-form.component.html',
-  styleUrls: ['./dialog-form.component.scss']
+  selector: 'app-dialog-edit',
+  templateUrl: './dialog-edit.html',
+  styleUrls: ['./dialog-edit.scss']
 })
-export class DialogFormComponent {
+export class DialogEdit {
   @Input() title: string = '';
   @Output() confirmEvent = new EventEmitter<void>();
   @Output() cancelEvent = new EventEmitter<void>();
@@ -35,5 +35,11 @@ export class DialogFormComponent {
   cancel(): void {
     this.cancelEvent.emit();
     this.close();
+  }
+
+  saveChanges() {
+    this.confirmEvent.emit();
+    this.close();
+    console.log('Saving changes to:');
   }
 }
