@@ -6,7 +6,7 @@
     "todo": {
       "projectType": "application",
       "schematics": {
-        "@scematics/angular:component": {
+        "@schematics/angular:component": {
           "style": "scss"
         }
       },
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "baseHref": "test-task-verstka/",
+            "baseHref": "/",
             "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -94,12 +94,6 @@
             ],
             "scripts": []
           }
-        },
-        "deploy": {
-          "github": {
-            "repo": "https://github.com/schoky/test-task-verstka"
-          },
-          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
