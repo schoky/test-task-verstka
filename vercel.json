@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm run build",
-  "outputDirectory": "dist/browser",
+  "outputDirectory": "dist",
   "installCommand": "pnpm install",
   "framework": "angular",
   "rewrites": [
